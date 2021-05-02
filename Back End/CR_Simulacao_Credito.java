@@ -7,8 +7,7 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 import org.openxava.util.*;
 
-
-@View(members = "Identificação [" + "classeentidade,classeproduto;" + " referencia, flagcredito;" + " descricaoobjeto,scoring;"
+@View(members = "IdentificaÃ§Ã£o [" + "entidadeavalista,classeentidade,classeproduto;" + " referencia, flagcredito;" + " descricaoobjeto,scoring;"
 		+ " duracao,parecer, classeestadocredito, classeperiodicidade;" + "]" + "Datas {" + " datainicio,datafim;"
 		+ " datasolicitacao,dataavaliacao,datadecisao;" + " dataalteracaoestadocredito,dataalteracaoestadosimulacao;"
 		+ "};" + "Totais {" + " totalsolicitado,totalconcedido,totalpossivel;"
@@ -97,8 +96,13 @@ public class CR_Simulacao_Credito {
 	@Required
 	@Column(name = "duracao")
 	private int duracao;
+	
+	@Required
+	@Column(name="entidade_avalista", length=50)
+	private String entidadeavalista;
 
 	@Required
+	@Action("Gerar.CalcularScoring")
 	@Column(name = "scoring")
 	private int scoring;
 
@@ -291,7 +295,7 @@ public class CR_Simulacao_Credito {
 			this.totalpossivel = totalpossivel;
 		else
 			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Possível: Valor incorreto ", totalpossivel));
+				XavaResources.getString("Total PossÃ­vel: Valor incorreto ", totalpossivel));
 	}
 
 	public double getTotalcapital() {
@@ -475,4 +479,18 @@ public class CR_Simulacao_Credito {
 		if (ydatalog == null) {ydatalog = LocalDate.now();}
 		this.datalog = ydatalog; 
 	}
+	
+	public String getEntidadeavalista() {
+		return entidadeavalista; 
+	}
+	public void setEntidadeavalista(String yentidadeavalista) {
+	    if (Utilitarios.CampoStringValido(yentidadeavalista,15)==false) { 
+	        throw new javax.validation.ValidationException(
+	            XavaResources.getString(
+	                "Entidade Avalista: Valor incorreto ", yentidadeavalista)
+	        );
+	    }    
+		this.entidadeavalista = yentidadeavalista; 
+	}
 }
+
