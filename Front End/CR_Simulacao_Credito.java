@@ -34,7 +34,7 @@ public class CR_Simulacao_Credito {
 	@Column(name = "flag_credito")
 	private boolean flagcredito;
 
-	@Required
+	@ReadOnly
 	@Column(name = "data_solicitacao")
 	private LocalDate datasolicitacao;
 
@@ -43,6 +43,7 @@ public class CR_Simulacao_Credito {
 	private LocalDate datadecisao;
 
 	@Required
+	@DefaultValueCalculator (com.iscte.youcredit.actions.CalcularDataInicio.class)
 	@Column(name = "data_inicio")
 	private LocalDate datainicio;
 
@@ -158,6 +159,7 @@ public class CR_Simulacao_Credito {
 	@Column(name="utilizador_log")
 	private int utilizadorlog;
 	
+	@ReadOnly
 	@Column(name="estado_log",length=1)
 	private String estadolog;
 
