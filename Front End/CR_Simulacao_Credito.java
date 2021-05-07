@@ -8,10 +8,10 @@ import org.openxava.annotations.*;
 import org.openxava.util.*;
 
 
-@View(members = "Identificação [" + "classeentidade,classeproduto;" + " referencia, flagcredito;" + " descricaoobjeto,scoring;"
-		+ " duracao,parecer, classeestadocredito, classeperiodicidade;" + "]" + "Datas {" + " datainicio,datafim;"
-		+ " datasolicitacao,dataavaliacao,datadecisao;" + " dataalteracaoestadocredito,dataalteracaoestadosimulacao;"
-		+ "};" + "Totais {" + " totalsolicitado,totalconcedido,totalpossivel;"
+@View(members = "IdentificaÃ§Ã£o [" + "entidadeavalista,classeentidade,classeproduto;"  + " descricaoobjeto,scoring;"
+		+ " duracao, classeperiodicidade;" + "]" + "Datas {" + " datainicio,datafim;"
+		+ " datasolicitacao,dataavaliacao,datadecisao;"
+		+ "};" + "Totais {" + " totalsolicitado,totalpossivel;"
 		+ " totalcapital,totaljuro,totaldespesa,totalimposto;" + "}; " + "Login {" + " datalog;" + " utilizadorlog;"
 		+ " estadolog;" + "}")
 
@@ -30,19 +30,19 @@ public class CR_Simulacao_Credito {
 	@Column(name = "referencia", length = 50)
 	private String referencia;
 
-	@Required
+	@Hidden
 	@Column(name = "flag_credito")
 	private boolean flagcredito;
 
-	@ReadOnly
+	@Required
 	@Column(name = "data_solicitacao")
 	private LocalDate datasolicitacao;
 
-	@Required
+	@ReadOnly
 	@Column(name = "data_decisao")
 	private LocalDate datadecisao;
 
-	@Required
+	@ReadOnly
 	@DefaultValueCalculator (com.iscte.youcredit.actions.CalcularDataInicio.class)
 	@Column(name = "data_inicio")
 	private LocalDate datainicio;
@@ -51,15 +51,15 @@ public class CR_Simulacao_Credito {
 	@Column(name = "data_fim")
 	private LocalDate datafim;
 
-	@Required
+	@ReadOnly
 	@Column(name = "data_avaliacao")
 	private LocalDate dataavaliacao;
 
-	@Required
+	@ReadOnly
 	@Column(name = "data_alteracao_estado_credito")
 	private LocalDate dataalteracaoestadocredito;
 	
-	@Required
+	@ReadOnly
 	@Column(name = "data_alteracao_estado_simulacao")
 	private LocalDate dataalteracaoestadosimulacao;
 
@@ -67,27 +67,27 @@ public class CR_Simulacao_Credito {
 	@Column(name = "total_solicitado")
 	private double totalsolicitado;
 
-	@Required
+	@Hidden
 	@Column(name = "total_concedido")
 	private double totalconcedido;
 
-	@Required
+	@ReadOnly
 	@Column(name = "total_possivel")
 	private double totalpossivel;
 
-	@Required
+	@ReadOnly
 	@Column(name = "total_capital")
 	private double totalcapital;
 
-	@Required
+	@ReadOnly
 	@Column(name = "total_juro")
 	private double totaljuro;
 
-	@Required
+	@ReadOnly
 	@Column(name = "total_despesa")
 	private double totaldespesa;
 
-	@Required
+	@ReadOnly
 	@Column(name = "total_imposto")
 	private double totalimposto;
 
@@ -98,12 +98,16 @@ public class CR_Simulacao_Credito {
 	@Required
 	@Column(name = "duracao")
 	private int duracao;
-
+	
+	@Column(name = "entidade_avalista", length = 50)
+	private String entidadeavalista;
+	
 	@Required
+	@Action("Gerar.CalcularScoring")
 	@Column(name = "scoring")
 	private int scoring;
 
-	@Required
+	@Hidden
 	@Column(name = "parecer")
 	private boolean parecer;
 
@@ -289,11 +293,7 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setTotalpossivel(double totalpossivel) {
-		if (totalpossivel > 0)
-			this.totalpossivel = totalpossivel;
-		else
-			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Possível: Valor incorreto ", totalpossivel));
+		//this.totalpossivel = totalpossivel;
 	}
 
 	public double getTotalcapital() {
@@ -301,11 +301,7 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setTotalcapital(double totalcapital) {
-		if (totalcapital > 0)
-			this.totalcapital = totalcapital;
-		else
-			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Capital: Valor incorreto ", totalcapital));
+		//this.totalcapital = totalcapital;
 	}
 
 	public double getTotaljuro() {
@@ -313,11 +309,7 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setTotaljuro(double totaljuro) {
-		if (totaljuro > 0)
-			this.totaljuro = totaljuro;
-		else
-			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Juro: Valor insuficiente ", totaljuro));
+		//this.totaljuro = totaljuro;
 	}
 
 	public double getTotaldespesa() {
@@ -325,11 +317,7 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setTotaldespesa(double totaldespesa) {
-		if (totaldespesa > 0)
-			this.totaldespesa = totaldespesa;
-		else
-			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Despesa: Valor insuficiente ", totaldespesa));
+		//this.totaldespesa = totaldespesa;
 	}
 
 	public double getTotalimposto() {
@@ -337,11 +325,7 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setTotalimposto(double totalimposto) {
-		if (totalimposto > 0)
-			this.totalimposto = totalimposto;
-		else
-			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Imposto: Valor insuficiente ", totalimposto));
+		//this.totalimposto = totalimposto;
 	}
 
 	public String getDescricaoobjeto() {
@@ -362,6 +346,18 @@ public class CR_Simulacao_Credito {
 		else
 			throw new javax.validation.ValidationException(
 				XavaResources.getString("Duracao: Valor incorreto ", duracao));
+	}
+	
+	public String getEntidadeavalista() {
+		return entidadeavalista;
+	}
+
+	public void setEntidadeavalista(String yentidadeavalista) {
+		if (Utilitarios.CampoStringValido(yentidadeavalista, 15) == false) {
+			throw new javax.validation.ValidationException(
+					XavaResources.getString("Entidade Avalista: Valor incorreto ", yentidadeavalista));
+		}
+		this.entidadeavalista = yentidadeavalista;
 	}
 
 	public int getScoring() {
@@ -425,6 +421,7 @@ public class CR_Simulacao_Credito {
 	public void setClasseestadocredito(CR_Estado_Credito_Simulacao classeestadocredito) {
 		this.classeestadocredito = classeestadocredito;
 		this.estadoid = classeestadocredito.getEstadoid();
+		this.dataalteracaoestadosimulacao = LocalDate.now();
 	}
 
 	public CR_Periodicidade getClasseperiodicidade() {
@@ -442,7 +439,12 @@ public class CR_Simulacao_Credito {
 
 	public void setClasseproduto(PR_Produto classeproduto) {
 		this.classeproduto = classeproduto;
-		this.produtoid = classeproduto.getProdutoid(); 
+		this.produtoid = classeproduto.getProdutoid();
+		this.totaljuro = classeproduto.getTaxajuro() * totalsolicitado * duracao * 0.01;
+		this.totalpossivel = classeproduto.getLimitemaximo();
+		this.totaldespesa = (classeproduto.getTaxadespesacobranca() + classeproduto.getTaxadespesacontratacao()) * 0.01 * totalsolicitado;
+		this.totalimposto = (classeproduto.getTaxaimpostocobranca() + classeproduto.getTaxaimpostocontratacao()) * 0.01 * totalsolicitado;
+		this.totalcapital = totaljuro + totalsolicitado + totaldespesa + totalimposto;
 	}
 
 	public EN_Entidade getClasseentidade() {
