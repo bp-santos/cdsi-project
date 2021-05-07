@@ -7,12 +7,12 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 import org.openxava.util.*;
 
-@View(members = "Identificação [" + "entidadeavalista,classeentidade,classeproduto;" + " referencia, flagcredito;" + " descricaoobjeto,scoring;"
-		+ " duracao,parecer, classeestadocredito, classeperiodicidade;" + "]" + "Datas {" + " datainicio,datafim;"
-		+ " datasolicitacao,dataavaliacao,datadecisao;" + " dataalteracaoestadocredito,dataalteracaoestadosimulacao;"
-		+ "};" + "Totais {" + " totalsolicitado,totalconcedido,totalpossivel;"
-		+ " totalcapital,totaljuro,totaldespesa,totalimposto;" + "}; " + "Login {" + " datalog;" + " utilizadorlog;"
-		+ " estadolog;" + "}")
+@View(members = "Identificação [" + "entidadeavalista,classeentidade,classeproduto;" + " referencia, flagcredito;"
+		+ " descricaoobjeto,scoring;" + " duracao,parecer, classeestadocredito, classeperiodicidade;" + "]" + "Datas {"
+		+ " datainicio,datafim;" + " datasolicitacao,dataavaliacao,datadecisao;"
+		+ " dataalteracaoestadocredito,dataalteracaoestadosimulacao;" + "};" + "Totais {"
+		+ " totalsolicitado,totalconcedido,totalpossivel;" + " totalcapital,totaljuro,totaldespesa,totalimposto;"
+		+ "}; " + "Login {" + " datalog;" + " utilizadorlog;" + " estadolog;" + "}")
 
 @Tab(properties = "simulacaocreditoid, flagcredito, datainicio, datafim", defaultOrder = "${simulacaocreditoid} asc")
 
@@ -24,7 +24,7 @@ public class CR_Simulacao_Credito {
 	@Hidden
 	@Column(name = "simulacao_credito_id")
 	private int simulacaocreditoid;
-	
+
 	@Id
 	@Column(name = "referencia", length = 50)
 	private String referencia;
@@ -33,35 +33,35 @@ public class CR_Simulacao_Credito {
 	@Column(name = "flag_credito")
 	private boolean flagcredito;
 
-	@Required
+	@ReadOnly
 	@Column(name = "data_solicitacao")
-	private LocalDate datasolicitacao;
+	private LocalDate datasolicitacao; 
 
-	@Required
+	@ReadOnly
 	@Column(name = "data_decisao")
 	private LocalDate datadecisao;
 
-	@Required
+	@ReadOnly
 	@Column(name = "data_inicio")
 	private LocalDate datainicio;
 
-	@Required
+	@ReadOnly
 	@Column(name = "data_fim")
 	private LocalDate datafim;
 
-	@Required
+	@ReadOnly
 	@Column(name = "data_avaliacao")
 	private LocalDate dataavaliacao;
 
-	@Required
+	@ReadOnly
 	@Column(name = "data_alteracao_estado_credito")
 	private LocalDate dataalteracaoestadocredito;
-	
-	@Required
+
+	@ReadOnly
 	@Column(name = "data_alteracao_estado_simulacao")
 	private LocalDate dataalteracaoestadosimulacao;
 
-	@Required
+	@ReadOnly
 	@Column(name = "total_solicitado")
 	private double totalsolicitado;
 
@@ -69,40 +69,39 @@ public class CR_Simulacao_Credito {
 	@Column(name = "total_concedido")
 	private double totalconcedido;
 
-	@Required
+	@ReadOnly
 	@Column(name = "total_possivel")
 	private double totalpossivel;
 
-	@Required
+	@ReadOnly
 	@Column(name = "total_capital")
 	private double totalcapital;
 
-	@Required
+	@ReadOnly
 	@Column(name = "total_juro")
 	private double totaljuro;
 
-	@Required
+	@ReadOnly
 	@Column(name = "total_despesa")
 	private double totaldespesa;
 
-	@Required
+	@ReadOnly
 	@Column(name = "total_imposto")
 	private double totalimposto;
 
-	@Required
+	@ReadOnly
 	@Column(name = "descricao_objeto", length = 50)
 	private String descricaoobjeto;
 
-	@Required
+	@ReadOnly
 	@Column(name = "duracao")
 	private int duracao;
-	
-	@Required
-	@Column(name="entidade_avalista", length=50)
-	private String entidadeavalista;
 
-	@Required
-	@Action("Gerar.CalcularScoring")
+	@ReadOnly
+	@Column(name = "entidade_avalista", length = 50)
+	private String entidadeavalista;
+	
+	@ReadOnly
 	@Column(name = "scoring")
 	private int scoring;
 
@@ -113,64 +112,59 @@ public class CR_Simulacao_Credito {
 	@Hidden
 	@Column(name = "estado_id")
 	private int estadoid;
-	
+
 	@Required
-	@ManyToOne(fetch=FetchType.LAZY)
-    @DescriptionsList(
-    		descriptionProperties="estado",
-    		condition="${estadolog} = 'A'")  
-    private CR_Estado_Credito_Simulacao classeestadocredito;
-	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@DescriptionsList(descriptionProperties = "estado", condition = "${estadolog} = 'A'")
+	private CR_Estado_Credito_Simulacao classeestadocredito;
+
 	@Hidden
-	@Column(name="periodicidade_id")
+	@Column(name = "periodicidade_id")
 	private int periodicidadeid;
 
 	@Required
-	@ManyToOne(fetch=FetchType.LAZY)
-    @DescriptionsList(
-    		descriptionProperties="periodicidade",
-    		condition="${estadolog} = 'A'")  
-    private CR_Periodicidade classeperiodicidade;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@DescriptionsList(descriptionProperties = "periodicidade", condition = "${estadolog} = 'A'")
+	private CR_Periodicidade classeperiodicidade;
 
 	@Hidden
 	@Column(name = "produto_id")
 	private int produtoid;
-	
+
 	@Required
-	@ManyToOne(fetch=FetchType.LAZY)
-	@DescriptionsList(
-			descriptionProperties="nome", 
-			condition="${estadolog} = 'A'")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@DescriptionsList(descriptionProperties = "nome", condition = "${estadolog} = 'A'")
 	private PR_Produto classeproduto;
 
 	@Hidden
 	@Column(name = "entidade_id")
 	private int entidadeid;
-	
+
 	@Required
-	@ManyToOne(fetch=FetchType.LAZY)
-	@DescriptionsList(
-			descriptionProperties="nome", 
-			condition="${estadolog} = 'A'")
-	private EN_Entidade classeentidade; 
-	
-	@ReadOnly  
-	@Column(name="data_log")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@DescriptionsList(descriptionProperties = "nome", condition = "${estadolog} = 'A'")
+	private EN_Entidade classeentidade;
+
+	@ReadOnly
+	@Column(name = "data_log")
 	private LocalDate datalog;
 
-	@ReadOnly  
-	@Column(name="utilizador_log")
+	@ReadOnly
+	@Column(name = "utilizador_log")
 	private int utilizadorlog;
-	
-	@Column(name="estado_log",length=1)
-	private String estadolog;
 
+	@Column(name = "estado_log", length = 1)
+	private String estadolog;
+	
+	@ReadOnly
 	public String getReferencia() {
 		return referencia;
 	}
 
 	public void setReferencia(String referencia) {
-		if (referencia.isEmpty() || referencia.isBlank() || referencia == null) {referencia = getUtilizadorlog() + "#" + getProdutoid() + "#" + getDatalog();}
+		if (referencia.isEmpty() || referencia.isBlank() || referencia == null) {
+			referencia = getUtilizadorlog() + "#" + getProdutoid() + "#" + getDatalog();
+		}
 		this.referencia = referencia;
 	}
 
@@ -179,7 +173,7 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setSimulacaocreditoid(int simulacaocreditoid) {
-		//this.simulacaocreditoid = simulacaocreditoid;
+		// this.simulacaocreditoid = simulacaocreditoid;
 	}
 
 	public boolean isFlagcredito() {
@@ -190,9 +184,10 @@ public class CR_Simulacao_Credito {
 		if (flagcredito) {
 			if (!this.parecer)
 				throw new javax.validation.ValidationException(
-					XavaResources.getString("Parecer: Valor insuficiente ", parecer));
+						XavaResources.getString("Parecer: Valor insuficiente ", parecer));
 		}
 		this.flagcredito = flagcredito;
+		setDatainicio(LocalDate.now());
 	}
 
 	public LocalDate getDatasolicitacao() {
@@ -200,7 +195,9 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setDatasolicitacao(LocalDate datasolicitacao) {
-		if(datasolicitacao==null) {datasolicitacao = LocalDate.now();}
+		if (datasolicitacao == null) {
+			datasolicitacao = LocalDate.now();
+		}
 		this.datasolicitacao = datasolicitacao;
 	}
 
@@ -209,7 +206,9 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setDatadecisao(LocalDate datadecisao) {
-		if(datadecisao==null) {datadecisao = LocalDate.now();}
+		if (datadecisao == null) {
+			datadecisao = LocalDate.now();
+		}
 		this.datadecisao = datadecisao;
 	}
 
@@ -218,7 +217,9 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setDatainicio(LocalDate datainicio) {
-		if(datainicio==null) {datainicio = LocalDate.now();}
+		if (datainicio == null) {
+			datainicio = LocalDate.now();
+		}
 		this.datainicio = datainicio;
 	}
 
@@ -227,10 +228,12 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setDatafim(LocalDate datafim) {
-		if(datafim==null) {datafim = LocalDate.now();}	
+		if (datafim == null) {
+			datafim = LocalDate.now();
+		}
 		if (datainicio.isAfter(datafim)) {
 			throw new javax.validation.ValidationException(
-				XavaResources.getString("Data inicio superior a data de fim ", datainicio, datafim));
+					XavaResources.getString("Data inicio superior a data de fim ", datainicio, datafim));
 		}
 		this.datafim = datafim;
 	}
@@ -240,7 +243,9 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setDataavaliacao(LocalDate dataavaliacao) {
-		if(dataavaliacao==null) {dataavaliacao = LocalDate.now();}
+		if (dataavaliacao == null) {
+			dataavaliacao = LocalDate.now();
+		}
 		this.dataavaliacao = dataavaliacao;
 	}
 
@@ -249,7 +254,9 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setDataalteracaoestadocredito(LocalDate dataalteracaoestadocredito) {
-		if(dataalteracaoestadocredito==null) {dataalteracaoestadocredito = LocalDate.now();}
+		if (dataalteracaoestadocredito == null) {
+			dataalteracaoestadocredito = LocalDate.now();
+		}
 		this.dataalteracaoestadocredito = dataalteracaoestadocredito;
 	}
 
@@ -258,7 +265,9 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setDataalteracaoestadosimulacao(LocalDate dataalteracaoestadosimulacao) {
-		if(dataalteracaoestadosimulacao==null) {dataalteracaoestadosimulacao = LocalDate.now();}
+		if (dataalteracaoestadosimulacao == null) {
+			dataalteracaoestadosimulacao = LocalDate.now();
+		}
 		this.dataalteracaoestadosimulacao = dataalteracaoestadosimulacao;
 	}
 
@@ -271,7 +280,7 @@ public class CR_Simulacao_Credito {
 			this.totalsolicitado = totalsolicitado;
 		else
 			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Solicidado: Valor incorreto ", totalsolicitado));
+					XavaResources.getString("Total Solicidado: Valor incorreto ", totalsolicitado));
 	}
 
 	public double getTotalconcedido() {
@@ -283,7 +292,7 @@ public class CR_Simulacao_Credito {
 			this.totalconcedido = totalconcedido;
 		} else
 			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Concedido: Valor incorreto ", totalconcedido));
+					XavaResources.getString("Total Concedido: Valor incorreto ", totalconcedido));
 	}
 
 	public double getTotalpossivel() {
@@ -295,7 +304,7 @@ public class CR_Simulacao_Credito {
 			this.totalpossivel = totalpossivel;
 		else
 			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Possível: Valor incorreto ", totalpossivel));
+					XavaResources.getString("Total Possível: Valor incorreto ", totalpossivel));
 	}
 
 	public double getTotalcapital() {
@@ -307,7 +316,7 @@ public class CR_Simulacao_Credito {
 			this.totalcapital = totalcapital;
 		else
 			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Capital: Valor incorreto ", totalcapital));
+					XavaResources.getString("Total Capital: Valor incorreto ", totalcapital));
 	}
 
 	public double getTotaljuro() {
@@ -319,7 +328,7 @@ public class CR_Simulacao_Credito {
 			this.totaljuro = totaljuro;
 		else
 			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Juro: Valor insuficiente ", totaljuro));
+					XavaResources.getString("Total Juro: Valor insuficiente ", totaljuro));
 	}
 
 	public double getTotaldespesa() {
@@ -331,7 +340,7 @@ public class CR_Simulacao_Credito {
 			this.totaldespesa = totaldespesa;
 		else
 			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Despesa: Valor insuficiente ", totaldespesa));
+					XavaResources.getString("Total Despesa: Valor insuficiente ", totaldespesa));
 	}
 
 	public double getTotalimposto() {
@@ -343,7 +352,7 @@ public class CR_Simulacao_Credito {
 			this.totalimposto = totalimposto;
 		else
 			throw new javax.validation.ValidationException(
-				XavaResources.getString("Total Imposto: Valor insuficiente ", totalimposto));
+					XavaResources.getString("Total Imposto: Valor insuficiente ", totalimposto));
 	}
 
 	public String getDescricaoobjeto() {
@@ -363,7 +372,7 @@ public class CR_Simulacao_Credito {
 			this.duracao = duracao;
 		else
 			throw new javax.validation.ValidationException(
-				XavaResources.getString("Duracao: Valor incorreto ", duracao));
+					XavaResources.getString("Duracao: Valor incorreto ", duracao));
 	}
 
 	public int getScoring() {
@@ -375,7 +384,7 @@ public class CR_Simulacao_Credito {
 			this.scoring = scoring;
 		else
 			throw new javax.validation.ValidationException(
-				XavaResources.getString("Scoring: Valor incorreto ", scoring));
+					XavaResources.getString("Scoring: Valor incorreto ", scoring));
 	}
 
 	public boolean isParecer() {
@@ -433,7 +442,7 @@ public class CR_Simulacao_Credito {
 
 	public void setClasseperiodicidade(CR_Periodicidade classeperiodicidade) {
 		this.classeperiodicidade = classeperiodicidade;
-		this.periodicidadeid = classeperiodicidade.getPeriodicidadeid(); 
+		this.periodicidadeid = classeperiodicidade.getPeriodicidadeid();
 	}
 
 	public PR_Produto getClasseproduto() {
@@ -442,7 +451,7 @@ public class CR_Simulacao_Credito {
 
 	public void setClasseproduto(PR_Produto classeproduto) {
 		this.classeproduto = classeproduto;
-		this.produtoid = classeproduto.getProdutoid(); 
+		this.produtoid = classeproduto.getProdutoid();
 	}
 
 	public EN_Entidade getClasseentidade() {
@@ -451,46 +460,49 @@ public class CR_Simulacao_Credito {
 
 	public void setClasseentidade(EN_Entidade classeentidade) {
 		this.classeentidade = classeentidade;
-		this.entidadeid = classeentidade.getEntidadeid(); 
+		this.entidadeid = classeentidade.getEntidadeid();
 	}
 
 	public int getUtilizadorlog() {
-		return utilizadorlog; 
+		return utilizadorlog;
 	}
 
 	public void setUtilizadorlog(int yutilizadorlog) {
-	    yutilizadorlog=1;
-		this.utilizadorlog = yutilizadorlog; 
+		yutilizadorlog = 1;
+		this.utilizadorlog = yutilizadorlog;
 	}
 
 	public String getEstadolog() {
-		return estadolog; 
+		return estadolog;
 	}
 
 	public void setEstadolog(String yestadolog) {
-		if (yestadolog.isEmpty() || yestadolog.isBlank() || yestadolog==null) {yestadolog="A";}
-		this.estadolog = yestadolog; 
+		if (yestadolog.isEmpty() || yestadolog.isBlank() || yestadolog == null) {
+			yestadolog = "A";
+		}
+		this.estadolog = yestadolog;
 	}
-	
+
 	public LocalDate getDatalog() {
-		return datalog; 
+		return datalog;
 	}
+
 	public void setDatalog(LocalDate ydatalog) {
-		if (ydatalog == null) {ydatalog = LocalDate.now();}
-		this.datalog = ydatalog; 
+		if (ydatalog == null) {
+			ydatalog = LocalDate.now();
+		}
+		this.datalog = ydatalog;
 	}
-	
+
 	public String getEntidadeavalista() {
-		return entidadeavalista; 
+		return entidadeavalista;
 	}
+
 	public void setEntidadeavalista(String yentidadeavalista) {
-	    if (Utilitarios.CampoStringValido(yentidadeavalista,15)==false) { 
-	        throw new javax.validation.ValidationException(
-	            XavaResources.getString(
-	                "Entidade Avalista: Valor incorreto ", yentidadeavalista)
-	        );
-	    }    
-		this.entidadeavalista = yentidadeavalista; 
+		if (Utilitarios.CampoStringValido(yentidadeavalista, 15) == false) {
+			throw new javax.validation.ValidationException(
+					XavaResources.getString("Entidade Avalista: Valor incorreto ", yentidadeavalista));
+		}
+		this.entidadeavalista = yentidadeavalista;
 	}
 }
-
