@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "ISO-8859-1"?>
+
+<!DOCTYPE controllers SYSTEM "dtds/controllers.dtd">
+
+<controllers>
+    
+    <!-- Environment variable:
+    <env-var name="YouCredit_DEFAULT_YEAR" value="2015"/> 
+    -->
+    
+    <!-- Session object:
+    <object name="YouCredit_activeYear" class="java.lang.Integer" value="2015" 
+    	    scope="global"/>    
+    -->
+    
+    <!-- Controller:
+    <controller name="Teacher">
+    	<extends controller="Typical"/>
+    	<action name="new" icon="library-plus" keystroke="Control N"
+        	class="actions.CreateTeacher">
+    	</action>
+	</controller>    
+    --><env-var name="Utilizador" value="99999" ></env-var>
+	<controller name="Gerar">
+	<action class="com.iscte.youcredit.actions.ActionEntidadeGerarRating" name="CalcularRating" hidden="true" mode="detail" label="Calcular">
+		<use-object name="xava_view" />
+	</action></controller>
+	<controller name="EN_Entidade">
+		<extends controller="Typical" ></extends><!--Para ficarem todas as opções por defeito-->
+		<action
+			class="com.iscte.youcredit.actions.ActionEntidadeActualizarCRM"
+			name="ActualizarCRM" mode="detail" label="Actualizar CRM">
+		</action>
+		<action
+			class="com.iscte.youcredit.actions.ActionEntidadeEliminar"
+			name="delete" mode="detail" label="Inactivar ">
+		</action>
+		
+	</controller>
+	<controller name="LOG_CRM_Entidade">
+		<extends controller="Print" /></controller>
+	<controller name="LOG_CR;M_Simulacao">
+		<extends controller="Print" /></controller>
+	<controller name="LOG_ParecerIC">
+		<extends controller="Print" /></controller>
+	
+
+<controller name="CR_Simulacao_Credito">
+		<extends controller="Print" /><action class="org.openxava.actions.SaveAction" name="Save" mode="detail" icon="Save">
+</action></controller></controllers>

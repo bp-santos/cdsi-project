@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "ISO-8859-1"?>
+
+<!DOCTYPE controllers SYSTEM "dtds/controllers.dtd">
+
+<controllers>
+    
+    <!-- Environment variable:
+    <env-var name="YouCreditFE_DEFAULT_YEAR" value="2015"/> 
+    -->
+    
+    <!-- Session object:
+    <object name="YouCreditFE_activeYear" class="java.lang.Integer" value="2015" 
+    	    scope="global"/>    
+    -->
+    
+    <!-- Controller:
+    <controller name="Teacher">
+    	<extends controller="Typical"/>
+    	<action name="new" icon="library-plus" keystroke="Control N"
+        	class="actions.CreateTeacher">
+    	</action>
+	</controller>    
+    --><controller name="EN_Entidade">
+	<extends controller="Print" /></controller>
+	<controller name="EN_Estado_Entidade">
+		<extends controller="Print" /></controller>
+	<controller name="EN_Nacionalidade">
+		<extends controller="Print" /></controller>
+	<controller name="EN_Sector_Actividade">
+		<extends controller="Print" /></controller>
+	<controller name="EN_Segmento_Cliente">
+		<extends controller="Print" /></controller>
+	<controller name="EN_Situacao_Profissional">
+		<extends controller="Print" /></controller>
+	<controller name="PR_Estado_Produto">
+		<extends controller="Print" /></controller>
+	<controller name="PR_Finalidade">
+		<extends controller="Print" /></controller>
+	<controller name="PR_Instituicao_Credito">
+		<extends controller="Print" /></controller>
+	<controller name="PR_Produto">
+		<extends controller="Print" /></controller>
+	
+
+<controller name="Gerar">
+	<action class="com.iscte.youcredit.actions.ActionSimulacaoGerarScoring" name="CalcularScoring" hidden="true" mode="detail" label="Calcular">
+	</action></controller>
+	<controller name="CR_Estado_Credito_Simulacao">
+		<extends controller="Print" />
+		<action class="org.openxava.actions.SaveAction" name="Save" mode="detail" icon="Save"></action></controller>
+	<controller name="CR_Periodicidade">
+		<extends controller="Print" />
+		<action class="org.openxava.actions.SaveAction" name="Save" mode="detail" icon="Save"></action></controller></controllers>
