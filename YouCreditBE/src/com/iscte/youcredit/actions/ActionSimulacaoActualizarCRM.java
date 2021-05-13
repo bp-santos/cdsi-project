@@ -56,10 +56,10 @@ public class ActionSimulacaoActualizarCRM extends ViewBaseAction{
 		listaParametros += "&produto=" + URLEncoder.encode(SimulacaoClasse.getClasseproduto().getProduto(),"UTF-8");
 		listaParametros += "&entidade=" + URLEncoder.encode(SimulacaoClasse.getClasseentidade().getEntidade(),"UTF-8");
 		
-		if (SimulacaoClasse.getClasseestadocredito().getEstado().contains("Aprovado")) //Ou "Aprovado" não sei bem
-		   {listaParametros += "&evento=" + URLEncoder.encode("criar","UTF-8");}
-		else
-		   {listaParametros += "&evento=" + URLEncoder.encode("alterar","UTF-8");}	
+		if (SimulacaoClasse.getClasseestadocredito().getEstado().contains("Aprovado"))
+		   {listaParametros += "&evento=" + URLEncoder.encode("alterar","UTF-8");}
+		if (SimulacaoClasse.getClasseestadocredito().getEstado().contains("Para Aprovação"))
+		   {listaParametros += "&evento=" + URLEncoder.encode("criar","UTF-8");}	
 
 		HttpURLConnection connection = (HttpURLConnection) new URL(urlAPI + servico + listaParametros).openConnection();
 			

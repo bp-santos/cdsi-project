@@ -7,7 +7,7 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 import org.openxava.util.*;
 
-@View(members = "Identificação [" + " referencia, flagcredito;" + "entidadeavalista,classeentidade,classeproduto;" 
+@View(members = "Identificação [" + " referencia, existecrm, flagcredito;" + "entidadeavalista,classeentidade,classeproduto;" 
 		+ " descricaoobjeto,scoring;" + " duracao,parecer, classeestadocredito, classeperiodicidade;" + "]" + "Datas {"
 		+ " datainicio,datafim;" + " datasolicitacao,dataavaliacao,datadecisao;"
 		+ " dataalteracaoestadocredito,dataalteracaoestadosimulacao;" + "};" + "Totais {"
@@ -99,6 +99,10 @@ public class CR_Simulacao_Credito {
 	@ReadOnly
 	@Column(name = "entidadeavalista", length = 50)
 	private String entidadeavalista;
+	
+	@ReadOnly  
+	@Column(name="existe_crm",length=1)
+	private String existecrm;
 	
 	@ReadOnly
 	@Column(name = "scoring")
@@ -280,7 +284,6 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setTotalconcedido(double totalconcedido) {
-		System.out.println(flagcredito);
 		if(isFlagcredito()) {
 				if (totalconcedido >= 500 && totalconcedido <= 5000) {
 					this.totalconcedido = totalconcedido;
@@ -288,10 +291,7 @@ public class CR_Simulacao_Credito {
 					throw new javax.validation.ValidationException(
 							XavaResources.getString("Total Concedido: Valor incorreto ", totalconcedido));
 		}
-		if(!isFlagcredito() && totalconcedido != 0)
-				throw new javax.validation.ValidationException(
-					XavaResources.getString("Total Concedido: tem de ser crédito ", totalconcedido));
-		}
+	}
 
 	public double getTotalpossivel() {
 		return totalpossivel;
@@ -415,14 +415,6 @@ public class CR_Simulacao_Credito {
 		this.estadoid = classeestadocredito.getEstadoid();
 		if(!flagcredito) this.dataalteracaoestadosimulacao = LocalDate.now();
 		else this.dataalteracaoestadocredito = LocalDate.now();
-//		if (parecer) {
-//			this.classeestadocredito.setEstado("Aprovado"); 
-//			this.estadoid = classeestadocredito.getEstadoid();
-//		}
-//		else {
-//			this.classeestadocredito.setEstado("Não Aprovado"); 
-//			this.estadoid = classeestadocredito.getEstadoid();
-//		}
 	}
 
 	public CR_Periodicidade getClasseperiodicidade() {
@@ -498,5 +490,13 @@ public class CR_Simulacao_Credito {
 					XavaResources.getString("Entidade Avalista: Valor incorreto ", yentidadeavalista));
 		}
 		this.entidadeavalista = yentidadeavalista;
+	}
+
+	public String getExistecrm() {
+		return existecrm;
+	}
+
+	public void setExistecrm(String existecrm) {
+		this.existecrm = existecrm;
 	}
 }

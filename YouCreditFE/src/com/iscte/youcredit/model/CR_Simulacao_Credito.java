@@ -8,7 +8,7 @@ import org.openxava.annotations.*;
 import org.openxava.util.*;
 
 
-@View(members = "Identificação [" + "referencia;" + "entidadeavalista,classeentidade,classeproduto;"  + " descricaoobjeto,scoring;"
+@View(members = "Identificação [" + "referencia,existecrm;" + "entidadeavalista,classeentidade,classeproduto;"  + " descricaoobjeto,scoring;"
 		+ " duracao, classeperiodicidade, classeestadocredito;" + "]" + "Datas {"
 		+ " datainicio, datasolicitacao,dataavaliacao,datadecisao;"
 		+ "};" + "Totais {" + " totalsolicitado,totalpossivel;"
@@ -101,6 +101,10 @@ public class CR_Simulacao_Credito {
 	
 	@Column(name = "entidadeavalista", length = 50)
 	private String entidadeavalista;
+	
+	@ReadOnly  
+	@Column(name="existe_crm",length=1)
+	private String existecrm;
 	
 	@Required
 	@Action("Gerar.CalcularScoring")
@@ -472,5 +476,12 @@ public class CR_Simulacao_Credito {
 	public void setDatalog(LocalDate ydatalog) {
 		if (ydatalog == null) {ydatalog = LocalDate.now();}
 		this.datalog = ydatalog; 
+	}
+	
+	public String getExistecrm() {
+		return existecrm; 
+	}
+	public void setExistecrm(String yexistecrm) {
+		this.existecrm = yexistecrm; 
 	}
 }

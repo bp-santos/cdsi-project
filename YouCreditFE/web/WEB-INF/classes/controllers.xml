@@ -50,4 +50,8 @@
 		<action class="org.openxava.actions.SaveAction" name="Save" mode="detail" icon="Save"></action></controller>
 	<controller name="CR_Periodicidade">
 		<extends controller="Print" />
-		<action class="org.openxava.actions.SaveAction" name="Save" mode="detail" icon="Save"></action></controller></controllers>
+		<action class="org.openxava.actions.SaveAction" name="Save" mode="detail" icon="Save"></action></controller>
+	<controller name="CR_Simulacao_Credito">
+		<extends controller="Typical" /><action class="com.iscte.youcredit.actions.ActionSimulacaoActualizarCRM" name="ActualizarCRM"
+			mode="detail" keystroke="Actualizar CRM">
+</action></controller></controllers>

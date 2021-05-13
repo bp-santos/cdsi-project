@@ -22,7 +22,7 @@
 	<!-- HSQLDB -->   	
     <Resource name="jdbc/YouCreditDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="100" maxIdle="20" maxWaitMillis="10000"
-	      username="root" password="Teste" driverClassName="com.mysql.jdbc.Driver"
+	      username="root" password="@Judoeestudos2001" driverClassName="com.mysql.jdbc.Driver"
 	      url="jdbc:mysql://localhost:3306/youcredit"/>
 	      
 	<!-- MySQL       
