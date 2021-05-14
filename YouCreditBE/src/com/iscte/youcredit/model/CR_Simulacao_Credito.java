@@ -116,7 +116,7 @@ public class CR_Simulacao_Credito {
 	@Column(name = "estado_id")
 	private int estadoid;
 
-	@Required
+	@ReadOnly
 	@ManyToOne(fetch = FetchType.LAZY)
 	@DescriptionsList(descriptionProperties = "estado", condition = "${estadolog} = 'A'")
 	private CR_Estado_Credito_Simulacao classeestadocredito;
@@ -125,7 +125,7 @@ public class CR_Simulacao_Credito {
 	@Column(name = "periodicidade_id")
 	private int periodicidadeid;
 
-	@Required
+	@ReadOnly
 	@ManyToOne(fetch = FetchType.LAZY)
 	@DescriptionsList(descriptionProperties = "periodicidade", condition = "${estadolog} = 'A'")
 	private CR_Periodicidade classeperiodicidade;
@@ -134,7 +134,7 @@ public class CR_Simulacao_Credito {
 	@Column(name = "produto_id")
 	private int produtoid;
 
-	@Required
+	@ReadOnly
 	@ManyToOne(fetch = FetchType.LAZY)
 	@DescriptionsList(descriptionProperties = "nome", condition = "${estadolog} = 'A'")
 	private PR_Produto classeproduto;
@@ -143,7 +143,7 @@ public class CR_Simulacao_Credito {
 	@Column(name = "entidade_id")
 	private int entidadeid;
 
-	@Required
+	@ReadOnly
 	@ManyToOne(fetch = FetchType.LAZY)
 	@DescriptionsList(descriptionProperties = "nome", condition = "${estadolog} = 'A'")
 	private EN_Entidade classeentidade;
@@ -284,13 +284,7 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setTotalconcedido(double totalconcedido) {
-		if(isFlagcredito()) {
-				if (totalconcedido >= 500 && totalconcedido <= 5000) {
-					this.totalconcedido = totalconcedido;
-				} else
-					throw new javax.validation.ValidationException(
-							XavaResources.getString("Total Concedido: Valor incorreto ", totalconcedido));
-		}
+		this.totalconcedido = totalconcedido;;
 	}
 
 	public double getTotalpossivel() {

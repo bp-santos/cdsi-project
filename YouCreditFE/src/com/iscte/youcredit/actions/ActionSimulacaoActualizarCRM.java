@@ -10,7 +10,7 @@ import com.iscte.youcredit.model.*;
 
 public class ActionSimulacaoActualizarCRM extends ViewBaseAction{
     private static CR_Simulacao_Credito SimulacaoClasse; 
-    private static final String urlAPI = "http://localhost:8081/YouCreditAPI/"; 
+    private static final String urlAPI = "http://localhost:8080/YouCreditAPI/"; 
     
 	@Override 
 	public void execute() throws Exception {
@@ -44,9 +44,9 @@ public class ActionSimulacaoActualizarCRM extends ViewBaseAction{
 		listaParametros += "&estadosimulacao=" + URLEncoder.encode(SimulacaoClasse.getClasseestadocredito().getEstado(),"UTF-8");
 		listaParametros += "&scoring=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getScoring()),"UTF-8");
 		if (SimulacaoClasse.getClasseestadocredito().getEstado().contains("Para Aprovação"))
-		   {listaParametros += "&evento=" + URLEncoder.encode("criar","UTF-8");}
-		if (SimulacaoClasse.getClasseestadocredito().getEstado().contains("Aprovado"))
-		   {listaParametros += "&evento=" + URLEncoder.encode("alterar","UTF-8");}	
+		   {listaParametros += "&evento=" + URLEncoder.encode("criar","UTF-8");}	
+		else 
+			listaParametros += "&evento=" + URLEncoder.encode("alterar","UTF-8");
 
 		HttpURLConnection connection = (HttpURLConnection) new URL(urlAPI + servico + listaParametros).openConnection();
 			

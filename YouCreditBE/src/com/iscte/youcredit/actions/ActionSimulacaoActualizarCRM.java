@@ -10,7 +10,7 @@ import com.iscte.youcredit.model.*;
 
 public class ActionSimulacaoActualizarCRM extends ViewBaseAction{
     private static CR_Simulacao_Credito SimulacaoClasse; 
-    private static final String urlAPI = "http://localhost:8081/YouCreditAPI/"; 
+    private static final String urlAPI = "http://localhost:8080/YouCreditAPI/"; 
     
 	@Override 
 	public void execute() throws Exception {

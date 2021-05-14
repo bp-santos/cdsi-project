@@ -8,7 +8,7 @@ import org.openxava.annotations.*;
 import org.openxava.util.*;
 
 
-@View(members = "Identificação [" + "referencia,existecrm;" + "entidadeavalista,classeentidade,classeproduto;"  + " descricaoobjeto,scoring;"
+@View(members = "Identificação [" + "referencia,existecrm,dataalteracaoestadocredito;" + "entidadeavalista,classeentidade,classeproduto;"  + " descricaoobjeto,scoring;"
 		+ " duracao, classeperiodicidade, classeestadocredito;" + "]" + "Datas {"
 		+ " datainicio, datasolicitacao,dataavaliacao,datadecisao;"
 		+ "};" + "Totais {" + " totalsolicitado,totalpossivel;"
@@ -25,8 +25,9 @@ public class CR_Simulacao_Credito {
 	@Hidden
 	@Column(name = "simulacao_id")
 	private int simulacaocreditoid;
-	
+		
 	@Id
+	@Required //passar para ReadOnly
 	@Column(name = "referencia", length = 50)
 	private String referencia;
 
@@ -55,7 +56,7 @@ public class CR_Simulacao_Credito {
 	@Column(name = "data_avaliacao")
 	private LocalDate dataavaliacao;
 
-	@ReadOnly
+	@Required
 	@Column(name = "data_alteracao_estado_credito")
 	private LocalDate dataalteracaoestadocredito;
 	
@@ -119,7 +120,8 @@ public class CR_Simulacao_Credito {
 	@Column(name = "estado_id")
 	private int estadoid;
 	
-	@Required
+	@ReadOnly
+	@DefaultValueCalculator (com.iscte.youcredit.actions.CalcularEstado.class)
 	@ManyToOne(fetch=FetchType.LAZY)
     @DescriptionsList(
     		descriptionProperties="estado",
@@ -176,7 +178,7 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setReferencia(String referencia) {
-		if (referencia.isEmpty() || referencia.isBlank() || referencia == null) {referencia = getUtilizadorlog() + "#" + getProdutoid() + "#" + getDatalog();}
+		if (referencia == null) { referencia = utilizadorlog + "#" + produtoid + "#" + datalog;};
 		this.referencia = referencia;
 	}
 
