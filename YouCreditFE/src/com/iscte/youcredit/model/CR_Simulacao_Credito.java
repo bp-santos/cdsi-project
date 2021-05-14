@@ -8,12 +8,11 @@ import org.openxava.annotations.*;
 import org.openxava.util.*;
 
 
-@View(members = "Identificação [" + "referencia,existecrm,dataalteracaoestadocredito;" + "entidadeavalista,classeentidade,classeproduto;"  + " descricaoobjeto,scoring;"
-		+ " duracao, classeperiodicidade, classeestadocredito;" + "]" + "Datas {"
-		+ " datainicio, datasolicitacao,dataavaliacao,datadecisao;"
-		+ "};" + "Totais {" + " totalsolicitado,totalpossivel;"
-		+ " totalcapital,totaljuro,totaldespesa,totalimposto;" + "}; " + "Login {" + " datalog;" + " utilizadorlog;"
-		+ " estadolog;" + "}")
+@View(members = "Identificação [" + "referencia,classeproduto;" + "entidadeavalista,classeentidade;"  + " descricaoobjeto,duracao,scoring;"
+		+ " classeperiodicidade, classeestadocredito,existecrm;" + "]" 
+		+ "Totais [" + " totalsolicitado,totalpossivel,totalcapital;" + " totaljuro,totaldespesa,totalimposto;" + "]" 
+		+ "Datas [" + " datainicio, datasolicitacao;" + "dataavaliacao,datadecisao;"+ "]" 
+		+ "Logging [" + " datalog,utilizadorlog,estadolog;" + "]")
 
 @Tab(properties = "simulacaocreditoid, flagcredito, datainicio, datafim", defaultOrder = "${simulacaocreditoid} asc")
 
@@ -22,13 +21,13 @@ import org.openxava.util.*;
 
 public class CR_Simulacao_Credito {
 
-	@Hidden
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "simulacao_id")
 	private int simulacaocreditoid;
 		
-	@Id
-	@Required //passar para ReadOnly
-	@Column(name = "referencia", length = 50)
+	@ReadOnly
+	@Column(name = "referencia")
 	private String referencia;
 
 	@Hidden
@@ -56,7 +55,7 @@ public class CR_Simulacao_Credito {
 	@Column(name = "data_avaliacao")
 	private LocalDate dataavaliacao;
 
-	@Required
+	@ReadOnly
 	@Column(name = "data_alteracao_estado_credito")
 	private LocalDate dataalteracaoestadocredito;
 	
@@ -104,6 +103,9 @@ public class CR_Simulacao_Credito {
 	private String entidadeavalista;
 	
 	@ReadOnly  
+	@DefaultValueCalculator(
+			 value=org.openxava.calculators.StringCalculator.class,
+			 properties={ @PropertyValue(name="string", value="N")})
 	@Column(name="existe_crm",length=1)
 	private String existecrm;
 	
@@ -121,7 +123,9 @@ public class CR_Simulacao_Credito {
 	private int estadoid;
 	
 	@ReadOnly
-	@DefaultValueCalculator (com.iscte.youcredit.actions.CalcularEstado.class)
+	@DefaultValueCalculator(
+			 value=org.openxava.calculators.StringCalculator.class,
+			 properties={ @PropertyValue(name="string", value="Registado")})
 	@ManyToOne(fetch=FetchType.LAZY)
     @DescriptionsList(
     		descriptionProperties="estado",
@@ -178,8 +182,7 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setReferencia(String referencia) {
-		if (referencia == null) { referencia = utilizadorlog + "#" + produtoid + "#" + datalog;};
-		this.referencia = referencia;
+		//this.referencia = referencia;
 	}
 
 	public int getSimulacaocreditoid() {
@@ -187,7 +190,7 @@ public class CR_Simulacao_Credito {
 	}
 
 	public void setSimulacaocreditoid(int simulacaocreditoid) {
-		//this.simulacaocreditoid = simulacaocreditoid;
+		this.simulacaocreditoid = simulacaocreditoid;
 	}
 
 	public boolean isFlagcredito() {
@@ -483,7 +486,14 @@ public class CR_Simulacao_Credito {
 	public String getExistecrm() {
 		return existecrm; 
 	}
+	
 	public void setExistecrm(String yexistecrm) {
 		this.existecrm = yexistecrm; 
+	}
+	
+	@PostPersist @PostLoad // Antes de criar ou alterar o registo
+	private void onPersist()  throws Exception {
+		System.out.println("Teste: " + produtoid + datalog);
+		this.referencia = simulacaocreditoid + "#" + produtoid + "#" + datalog;
 	}
 }

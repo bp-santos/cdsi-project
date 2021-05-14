@@ -22,8 +22,8 @@ public class ActionSimulacaoGuardar extends ViewBaseAction {
 //	    String produtoid = (String) getView().getValue("produtoid");
 //	    String datalog = (String) getView().getValue("datalog");
 //	    referencia.put("referencia", (utilizador + "#" + produtoid + "#" + datalog).toString());
-//	    getView().setValue("referencia", referencia);
-	    
+//	    getView().setValue("referencia", "12345");
+
 	    executeAction("CRUD.save");
 	}
 }

@@ -1,9 +1,9 @@
 package com.iscte.youcredit.model;
-import java.math.*;
 import java.time.*;
+
 import javax.persistence.*;
+
 import org.openxava.annotations.*;
-import org.openxava.model.*;
 import org.openxava.util.*;
 
 //-----------------------------------------------

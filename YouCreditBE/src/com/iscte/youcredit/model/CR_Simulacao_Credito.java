@@ -12,7 +12,7 @@ import org.openxava.util.*;
 		+ " datainicio,datafim;" + " datasolicitacao,dataavaliacao,datadecisao;"
 		+ " dataalteracaoestadocredito,dataalteracaoestadosimulacao;" + "};" + "Totais {"
 		+ " totalsolicitado,totalconcedido,totalpossivel;" + " totalcapital,totaljuro,totaldespesa,totalimposto;"
-		+ "}; " + "Login {" + " datalog;" + " utilizadorlog;" + " estadolog;" + "}")
+		+ "}; " + "Logging [" + " datalog;" + " utilizadorlog;" + " estadolog;" + "]")
 
 @Tab(properties = "simulacaocreditoid, flagcredito, datainicio, datafim", defaultOrder = "${simulacaocreditoid} asc")
 
