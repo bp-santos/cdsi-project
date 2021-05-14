@@ -30,7 +30,7 @@ CREATE TABLE cr_periodicidade_estado_prestacao (
 
 CREATE TABLE cr_simulacao_credito (
 	simulacao_id INT AUTO_INCREMENT,
-	referencia VARCHAR(50) NOT NULL, 					
+	referencia VARCHAR(50), 					
     flag_credito BOOLEAN NOT NULL,					
     data_solicitacao DATE,							
     data_decisao DATE,								
