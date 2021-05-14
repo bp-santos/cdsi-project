@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS cr_periodicidade_estado_prestacao;
 
 CREATE TABLE cr_estado_credito_simulacao (
 	estado_id INT AUTO_INCREMENT,
-    estado VARCHAR (15) NOT NULL,
+    estado_simulacao VARCHAR (15) NOT NULL,
     descricao VARCHAR (15) NOT NULL,
 	data_log TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     utilizador_log INT NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE cr_periodicidade_estado_prestacao (
 );
 
 CREATE TABLE cr_simulacao_credito (
-	simulacao_credito_id INT AUTO_INCREMENT,
+	simulacao_id INT AUTO_INCREMENT,
 	referencia VARCHAR(50) NOT NULL, 					
     flag_credito BOOLEAN NOT NULL,					
     data_solicitacao DATE,							
@@ -60,7 +60,7 @@ CREATE TABLE cr_simulacao_credito (
     utilizador_log INT NOT NULL,
     estado_log VARCHAR(1) NOT NULL DEFAULT "A",
     
-    PRIMARY KEY (simulacao_credito_id),
+    PRIMARY KEY (simulacao_id),
     
     FOREIGN KEY (estado_id)
         REFERENCES cr_estado_credito_simulacao (estado_id),
