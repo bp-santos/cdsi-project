@@ -7,6 +7,8 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 import org.openxava.util.*;
 
+import com.iscte.youcredit.actions.*;
+
 //-----------------------------------------------
 //Modelização interface com utilizador CRUD
 //-----------------------------------------------
@@ -43,9 +45,9 @@ import org.openxava.util.*;
 //-----------------------------------------------
 @Tab(
 	properties="nome,telefone,email,salarioanual",
-	defaultOrder="${nome} desc, ${salarioanual} asc"
-	//filter=ObterUtilizador.class, 
-	//baseCondition="${entidadeid} = ?"
+	defaultOrder="${nome} desc, ${salarioanual} asc",
+	filter=ObterUtilizador.class, 
+	baseCondition="${entidadeid} = ?"
 ) 
 
 //-----------------------------------------------

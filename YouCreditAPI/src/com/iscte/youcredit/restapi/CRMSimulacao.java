@@ -115,12 +115,12 @@ public class CRMSimulacao extends HttpServlet {
 	        query.setParameter(18, utilizador_log);
 	        query.setParameter(19, estado_log);
 	   
-	        try {
+//	        try {
 	             resQuery = query.executeUpdate();
 	             conexao.getTransaction().commit();
 	             resServico="OK";
-	            }
-	        catch (Exception erro) {resServico ="Erro formato parâmetros";}
+//	            }
+//	        catch (Exception erro) {resServico ="Erro formato parâmetros";}
 		}   
 	    
 		//Retornar Json            

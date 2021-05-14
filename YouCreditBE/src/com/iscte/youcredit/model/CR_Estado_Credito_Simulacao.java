@@ -26,7 +26,7 @@ import org.openxava.util.*;
 public class CR_Estado_Credito_Simulacao {
 	
 	@Id 
-	@Column (name = "estado", length = 15)
+	@Column (name = "estado_simulacao", length = 15)
 	private String estado;
 	
 	@Hidden 

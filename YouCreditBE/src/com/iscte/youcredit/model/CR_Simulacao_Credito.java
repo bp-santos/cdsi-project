@@ -22,7 +22,7 @@ import org.openxava.util.*;
 public class CR_Simulacao_Credito {
 
 	@Hidden
-	@Column(name = "simulacao_credito_id")
+	@Column(name = "simulacao_id")
 	private int simulacaocreditoid;
 
 	@Id
@@ -64,7 +64,7 @@ public class CR_Simulacao_Credito {
 	@ReadOnly
 	@Column(name = "total_solicitado")
 	private double totalsolicitado;
-
+	
 	@Column(name = "total_concedido")
 	private double totalconcedido;
 

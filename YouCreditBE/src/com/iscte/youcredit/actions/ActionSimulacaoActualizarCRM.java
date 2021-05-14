@@ -10,7 +10,7 @@ import com.iscte.youcredit.model.*;
 
 public class ActionSimulacaoActualizarCRM extends ViewBaseAction{
     private static CR_Simulacao_Credito SimulacaoClasse; 
-    private static final String urlAPI = "http://localhost:8080/YouCreditAPI/"; 
+    private static final String urlAPI = "http://localhost:8081/YouCreditAPI/"; 
     
 	@Override 
 	public void execute() throws Exception {
@@ -18,7 +18,7 @@ public class ActionSimulacaoActualizarCRM extends ViewBaseAction{
 	    String RetornoCall; 
 	    SimulacaoClasse = (CR_Simulacao_Credito) getView().getEntity();
         
-	    RetornoCall = callGet("CRMEstado");
+	    RetornoCall = callGet("CRMSimulacao");
 	    System.out.println("callGet "+RetornoCall);
 	    
 	    getView().setValue("existecrm", "S");
@@ -29,37 +29,24 @@ public class ActionSimulacaoActualizarCRM extends ViewBaseAction{
 	
 	private static String callGet(String servico) throws IOException{
 
-		String listaParametros = "?simulacaocreditoid=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getSimulacaocreditoid()),"UTF-8");
-		listaParametros += "&referencia=" + URLEncoder.encode(SimulacaoClasse.getReferencia(),"UTF-8");
-		listaParametros += "&flagcredito=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.isFlagcredito()),"UTF-8");
-		listaParametros += "&datasolicitacao=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDatasolicitacao()),"UTF-8");
-		listaParametros += "&datadecisao=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDatadecisao()),"UTF-8");
-		listaParametros += "&datainicio=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDatainicio()),"UTF-8");
-		listaParametros += "&datafim=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDatafim()),"UTF-8");
-		listaParametros += "&dataavaliacao=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDataavaliacao()),"UTF-8");
-		listaParametros += "&dataalteracaoestadocredito=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDataalteracaoestadocredito()),"UTF-8");
-		listaParametros += "&dataalteracaoestadosimulacao=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDataalteracaoestadosimulacao()),"UTF-8");
-		listaParametros += "&totalsolicitado=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalsolicitado()),"UTF-8");
-		listaParametros += "&totalconcedido=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalconcedido()),"UTF-8");
-		listaParametros += "&totalpossivel=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalpossivel()),"UTF-8");
-		listaParametros += "&totalcapital=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalcapital()),"UTF-8");
-		listaParametros += "&totaljuro=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotaljuro()),"UTF-8");
-		listaParametros += "&totaldespesa=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotaldespesa()),"UTF-8");
-		listaParametros += "&totalimposto=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalimposto()),"UTF-8");
-		listaParametros += "&descricaoobjeto=" + URLEncoder.encode(SimulacaoClasse.getDescricaoobjeto(),"UTF-8");
-		listaParametros += "&duracao=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDuracao()),"UTF-8");
-		listaParametros += "&entidadeavalista=" + URLEncoder.encode(SimulacaoClasse.getEntidadeavalista(),"UTF-8");
-		listaParametros += "&scoring=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getScoring()),"UTF-8");
-		listaParametros += "&parecer=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.isParecer()),"UTF-8");
-		listaParametros += "&estado=" + URLEncoder.encode(SimulacaoClasse.getClasseestadocredito().getEstado(),"UTF-8");
-		listaParametros += "&periodicidade=" + URLEncoder.encode(SimulacaoClasse.getClasseperiodicidade().getPeriodicidade(),"UTF-8");
+		String listaParametros = "?simulacaoid=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getSimulacaocreditoid()),"UTF-8");
 		listaParametros += "&produto=" + URLEncoder.encode(SimulacaoClasse.getClasseproduto().getProduto(),"UTF-8");
-		listaParametros += "&entidade=" + URLEncoder.encode(SimulacaoClasse.getClasseentidade().getEntidade(),"UTF-8");
-		
-		if (SimulacaoClasse.getClasseestadocredito().getEstado().contains("Aprovado"))
-		   {listaParametros += "&evento=" + URLEncoder.encode("alterar","UTF-8");}
+		listaParametros += "&instituicaocredito=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getClasseproduto().getClasseinstituicaocredito().getBanco()),"UTF-8");
+		listaParametros += "&entidadeid=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getClasseentidade().getEntidadeid()),"UTF-8");
+		listaParametros += "&nome=" + URLEncoder.encode(SimulacaoClasse.getClasseentidade().getNome(),"UTF-8");
+		listaParametros += "&nif=" + URLEncoder.encode(SimulacaoClasse.getClasseentidade().getNif(),"UTF-8");
+		listaParametros += "&telefone=" + URLEncoder.encode(SimulacaoClasse.getClasseentidade().getTelefone(),"UTF-8");
+		listaParametros += "&email=" + URLEncoder.encode(SimulacaoClasse.getClasseentidade().getEmail(),"UTF-8");
+		listaParametros += "&rating=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getClasseentidade().getRating()),"UTF-8");
+		listaParametros += "&estadoentidade=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getClasseentidade().getClasseestadoentidade().getEstadoentidade()),"UTF-8");
+		listaParametros += "&totalsolicitado=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalsolicitado()),"UTF-8");
+		listaParametros += "&totalpossivel=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalpossivel()),"UTF-8");
+		listaParametros += "&estadosimulacao=" + URLEncoder.encode(SimulacaoClasse.getClasseestadocredito().getEstado(),"UTF-8");
+		listaParametros += "&scoring=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getScoring()),"UTF-8");
 		if (SimulacaoClasse.getClasseestadocredito().getEstado().contains("Para Aprovação"))
-		   {listaParametros += "&evento=" + URLEncoder.encode("criar","UTF-8");}	
+		   {listaParametros += "&evento=" + URLEncoder.encode("criar","UTF-8");}
+		if (SimulacaoClasse.getClasseestadocredito().getEstado().contains("Aprovado"))
+		   {listaParametros += "&evento=" + URLEncoder.encode("alterar","UTF-8");}	
 
 		HttpURLConnection connection = (HttpURLConnection) new URL(urlAPI + servico + listaParametros).openConnection();
 			
@@ -89,31 +76,19 @@ public class ActionSimulacaoActualizarCRM extends ViewBaseAction{
 			connection.setRequestMethod("POST");
 			
 			String listaParametros = "?simulacaocreditoid=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getSimulacaocreditoid()),"UTF-8");
-			listaParametros += "&referencia=" + URLEncoder.encode(SimulacaoClasse.getReferencia(),"UTF-8");
-			listaParametros += "&flagcredito=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.isFlagcredito()),"UTF-8");
-			listaParametros += "&datasolicitacao=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDatasolicitacao()),"UTF-8");
-			listaParametros += "&datadecisao=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDatadecisao()),"UTF-8");
-			listaParametros += "&datainicio=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDatainicio()),"UTF-8");
-			listaParametros += "&datafim=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDatafim()),"UTF-8");
-			listaParametros += "&dataavaliacao=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDataavaliacao()),"UTF-8");
-			listaParametros += "&dataalteracaoestadocredito=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDataalteracaoestadocredito()),"UTF-8");
-			listaParametros += "&dataalteracaoestadosimulacao=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDataalteracaoestadosimulacao()),"UTF-8");
-			listaParametros += "&totalsolicitado=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalsolicitado()),"UTF-8");
-			listaParametros += "&totalconcedido=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalconcedido()),"UTF-8");
-			listaParametros += "&totalpossivel=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalpossivel()),"UTF-8");
-			listaParametros += "&totalcapital=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalcapital()),"UTF-8");
-			listaParametros += "&totaljuro=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotaljuro()),"UTF-8");
-			listaParametros += "&totaldespesa=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotaldespesa()),"UTF-8");
-			listaParametros += "&totalimposto=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalimposto()),"UTF-8");
-			listaParametros += "&descricaoobjeto=" + URLEncoder.encode(SimulacaoClasse.getDescricaoobjeto(),"UTF-8");
-			listaParametros += "&duracao=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getDuracao()),"UTF-8");
-			listaParametros += "&entidadeavalista=" + URLEncoder.encode(SimulacaoClasse.getEntidadeavalista(),"UTF-8");
-			listaParametros += "&scoring=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getScoring()),"UTF-8");
-			listaParametros += "&parecer=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.isParecer()),"UTF-8");
-			listaParametros += "&estado=" + URLEncoder.encode(SimulacaoClasse.getClasseestadocredito().getEstado(),"UTF-8");
-			listaParametros += "&periodicidade=" + URLEncoder.encode(SimulacaoClasse.getClasseperiodicidade().getPeriodicidade(),"UTF-8");
 			listaParametros += "&produto=" + URLEncoder.encode(SimulacaoClasse.getClasseproduto().getProduto(),"UTF-8");
-			listaParametros += "&entidade=" + URLEncoder.encode(SimulacaoClasse.getClasseentidade().getEntidade(),"UTF-8");
+			listaParametros += "&banco=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getClasseproduto().getClasseinstituicaocredito().getBanco()),"UTF-8");
+			listaParametros += "&entidadeid=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getClasseentidade().getEntidadeid()),"UTF-8");
+			listaParametros += "&nome=" + URLEncoder.encode(SimulacaoClasse.getClasseentidade().getNome(),"UTF-8");
+			listaParametros += "&nif=" + URLEncoder.encode(SimulacaoClasse.getClasseentidade().getNif(),"UTF-8");
+			listaParametros += "&telefone=" + URLEncoder.encode(SimulacaoClasse.getClasseentidade().getTelefone(),"UTF-8");
+			listaParametros += "&email=" + URLEncoder.encode(SimulacaoClasse.getClasseentidade().getEmail(),"UTF-8");
+			listaParametros += "&rating=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getClasseentidade().getRating()),"UTF-8");
+			listaParametros += "&estadoentidade=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getClasseentidade().getClasseestadoentidade().getEstadoentidade()),"UTF-8");
+			listaParametros += "&totalsolicitado=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalsolicitado()),"UTF-8");
+			listaParametros += "&totalpossivel=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getTotalpossivel()),"UTF-8");
+			listaParametros += "&estado=" + URLEncoder.encode(SimulacaoClasse.getClasseestadocredito().getEstado(),"UTF-8");
+			listaParametros += "&scoring=" + URLEncoder.encode(String.valueOf(SimulacaoClasse.getScoring()),"UTF-8");
 			listaParametros += "&evento=" + URLEncoder.encode("criar","UTF-8");
 	
 			connection.setDoOutput(true);
